@@ -1,0 +1,16 @@
+/* .sound-wave{
+  position:absolute;
+  padding-top: 20px;
+}*/
+
+button {
+  position:relative;
+  top: 50%;
+  left: 40%;
+
+  padding: 15px 32px;
+  background-color: white;
+  color: black;
+  border: 2px solid #4CAF50; /* Green */
+
+}
