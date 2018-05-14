@@ -4,9 +4,16 @@ import ReactRecorder from './components/recorder/ReactRecorder';
 import Replay from './components/replay/Replay';
 import ProgressBar from './components/progressBar/ProgressBar';
 
+import RecordEditor from './components/RecordEditor'
+
+import './App.css'
+
 class App extends Component {
     constructor(props) {
      super(props);
+     this.state = {
+       recording: true
+     }
     /* this.state = {
        events:[],
        mouseEvents:[],
@@ -91,38 +98,22 @@ class App extends Component {
          isRecording: true}
        );
    }
+   togglePreview = () => {
+     this.setState({
+       recording: !this.state.recording
+     })
+   }
   render() {
+    if (this.state.recording) {
+      return <div>
+        <RecordEditor />
+        <button onClick={this.togglePreview}>Preview</button>
+      </div>
+    }
     return (
       <div>
-      <Replay
-           // height={600}
-           // width={800}
-           // language='javascript'
-           // theme='vs-dark'
-           //value={this.value}
-           options={this.options}
-           // editorDidMount={this.editorDidMount}
-           // requireConfig={requireConfig}
-           events={this.events}
-           onChange={this.onChange}
-           onMouseMove={this.onMouseMove}
-         />
-
-         {/* //recording problemes */}
-         <ReactRecorder className="rec"
-            record={this.record}
-            onStop={this.onStop}
-           // style={{position:'absolute', bottom:'0px'}}
-        >
-
-           <button onTouchTap={this.startRecording} type="button" >Start</button>
-           <button onTouchTap={this.stopRecording} type="button">Stop</button>
-
-         </ReactRecorder>
-
-         {/* // progress bar to complete */}
-         <progressBar completed={100}></progressBar>
-
+        <Replay />
+        <button onClick={this.togglePreview}>Preview</button>
       </div>
     );
   }

@@ -6,83 +6,102 @@ export default class Replay extends React.Component {
     constructor(props) {
      super(props);
      this.state = {
-       events:[],
-       mouseEvents:[],
+       currEvent: undefined,
+       currMouse: undefined,
+       playing: false,
+       timeouts: [],
+       started: false
      }
    }
 
-   editorDidMount(editor, monaco) {
-     console.log('editorDidMount', editor);
+   editorDidMount = (editor, monaco) => {
+     this.editor = editor;
      editor.focus();
    }
 
-   onChange = (newValue, e) => {
-       this.setState({
-           events: this.state.events.concat({
-               type:e,
-               timestamp: Date.now(),
-               value:newValue
-           })
-       }, () => window.localStorage.array = JSON.stringify(this.state.events))
+   startReplay = () => {
+     this.setState({
+       playing: true,
+       started: true
+     })
+     let array = JSON.parse(window.localStorage.array)
+     let firstEvent = this.state.currEvent
+     if (!firstEvent) {
+       firstEvent = array[0]
      }
-
-  onMouseMove=(e)=>{
-       console.log('mouse move', e)
-        this.setState({
-          mouseEvents:this.state.mouseEvents.concat({
-            cx: e.clientX,
-            cy: e.clientY,
-            wx: window.innerHeight,
-            wy: window.innerWidth,
-            timestamp:Date.now()
-          })
-        },() =>window.localStorage.mouseArray= JSON.stringify(this.state.mouseEvents))
-     }
-
-
-   replay = (array) => {
-     let firstEvent = array[0]
      this.setState({
        value: firstEvent.value
      })
      for (var i = 1; i < array.length; i++) {
        let event = array[i]
-       setTimeout(() => (
-         this.setState({
-           value: event.value
-         })
-       ),event.timestamp - firstEvent.timestamp)
+       this.setState({
+         timeouts: this.state.timeouts.concat(setTimeout(() => {
+           if (this.state.playing) {
+             this.setState({
+               value: event.value,
+               currEvent: event
+             })
+           }
+         },event.timestamp - firstEvent.timestamp))
+       })
+     }
+
+     let editorStates = JSON.parse(window.localStorage.editorStates)
+     console.log(editorStates)
+     for (var i = 0; i < editorStates.length; i++) {
+       this.setState({
+         timeouts: window.setTimeout((i) => {
+           console.log(editorStates[i], i)
+           console.log(this.editor.restoreViewState)
+           this.editor.restoreViewState(editorStates[i])
+         }, i * 1000, i)
+       })
+     }
+
+     let mouseArray = JSON.parse(window.localStorage.mouseArray)
+     let firstMouseEvent = this.state.currMouse
+     if (!firstMouseEvent) {
+       firstMouseEvent = mouseArray[0]
+     }
+     this.setState({
+       cx:firstMouseEvent.cx,
+       cy:firstMouseEvent.cy
+     })
+     for (var i = 1; i < mouseArray.length; i++) {
+       let mouseEvents=mouseArray[i]
+       this.setState({
+         timeouts: this.state.timeouts.concat(setTimeout(()=>{
+           if (this.state.playing) {
+             this.setState({
+               cx:mouseEvents.cx,
+               cy:mouseEvents.cy,
+               currMouse: mouseEvents
+             })
+           }
+         },mouseEvents.timestamp - firstMouseEvent.timestamp)
+        )
+       })
      }
    }
 
-   replayMouse=(array)=>{
-      let firstMouseEvent=array[0]
-      //let cx=event.clientX
-      //let cy=event.clientY
-      this.setState({
-        cx:firstMouseEvent.cx,
-        cy:firstMouseEvent.cy
-      })
-      for (var i = 1; i < array.length; i++) {
-        let mouseEvents=array[i]
-        setTimeout(()=>(
-          this.setState({
-            cx:mouseEvents.cx,
-            cy:mouseEvents.cy,
-          })
-        ),mouseEvents.timestamp - firstMouseEvent.timestamp
-      )}
+   stop = () => {
+     this.setState({
+       playing: false
+     })
+     for (var i = 0; i < this.state.timeouts.length; i++) {
+       window.clearTimeout(this.state.timeouts[i])
+     }
    }
 
-   componentDidMount () {
-     let array = JSON.parse(window.localStorage.array)
-     let mouseArray = JSON.parse(window.localStorage.mouseArray)
-     console.log(array)
-     window.document.addEventListener('mousemove', this.onMouseMove)
-     this.replay(array)
-     this.replayMouse(mouseArray)
+   resume = () => {
+     this.setState({
+       playing: true,
+       timeouts: []
+     })
+     this.startReplay()
    }
-  render() {
+
+   render() {
     const requireConfig = {
        url: 'https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.1/require.min.js',
        paths: {
@@ -93,6 +112,7 @@ export default class Replay extends React.Component {
     const options = {
       selectOnLineNumbers: true
     };
+
     return (
       <div>
       <MonacoEditor
@@ -100,7 +120,7 @@ export default class Replay extends React.Component {
            width={window.innerWidth}
            language='javascript'
            theme='vs-dark'
-           value={this.value}
+           value={this.state.value}
            options={options}
            editorDidMount={this.editorDidMount}
            requireConfig={requireConfig}
@@ -109,9 +129,17 @@ export default class Replay extends React.Component {
            onMouseMove={this.onMouseMove}
          />
          <img src={cursor} className="App-cursor"
-            style={{ width:'15px', position: 'absolute', top :this.state.cx +'px', left:this.state.cy +'px'}}
+            style={{ width:'15px', position: 'absolute', left :this.state.cx +'px', top:this.state.cy +'px'}}
          />
-
+         <button onClick={this.startReplay}> Replay </button>
+         {
+          (this.state.playing) &&
+          <button onClick={this.stop}> pause </button>
+         }
+         {
+           !this.state.playing && this.state.started &&
+           <button onClick={this.resume}> resume </button>
+         }
       </div>
     );
   }
