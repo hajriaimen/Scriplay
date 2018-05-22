@@ -1,15 +1,33 @@
 import React, { Component } from 'react';
-import Progress from 'react-progressbar';
+import './ProgressBar.css';
 
-export default class ProgressBar extends React.Component {
+export default class ProgressBar extends Component {
   constructor(props){
-    super(props)
+    super(props);
+    this.state = {
+    count:0
+    }
   }
-  render () {
+
+  componentDidMount(){
+    this.setState((prevState, props) => ({
+    count: prevState.count + 1
+    }));
+  }
+  resume = () => {
+    this.setState({
+      playing: true,
+      timeouts: []
+    })
+    this.startReplay()
+  }
+  render() {
     return (
-      <div>
-        <Progress completed={100}  />
+      <div className='layout-page'>
+        <div id="myProgress">
+          <div id="myBar"style={{width:this.count +'%'}}></div>
+        </div>
       </div>
-    )
+    );
   }
 }

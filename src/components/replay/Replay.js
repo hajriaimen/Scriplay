@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import MonacoEditor from 'react-monaco-editor';
 import cursor from './cursor.png';
-
+import './Replay.css';
+//import ProgressBar from '../progressBar/ProgressBar';
 export default class Replay extends React.Component {
     constructor(props) {
      super(props);
@@ -10,7 +11,9 @@ export default class Replay extends React.Component {
        currMouse: undefined,
        playing: false,
        timeouts: [],
-       started: false
+       started: false,
+       recordingTime:0,
+       // currTime:0
      }
    }
 
@@ -18,6 +21,7 @@ export default class Replay extends React.Component {
      this.editor = editor;
      editor.focus();
    }
+
 
    startReplay = () => {
      this.setState({
@@ -31,6 +35,7 @@ export default class Replay extends React.Component {
      }
      this.setState({
        value: firstEvent.value
+
      })
      for (var i = 1; i < array.length; i++) {
        let event = array[i]
@@ -75,7 +80,7 @@ export default class Replay extends React.Component {
              this.setState({
                cx:mouseEvents.cx,
                cy:mouseEvents.cy,
-               currMouse: mouseEvents
+               currMouse: mouseEvents,
              })
            }
          },mouseEvents.timestamp - firstMouseEvent.timestamp)
@@ -112,34 +117,45 @@ export default class Replay extends React.Component {
     const options = {
       selectOnLineNumbers: true
     };
+    // var tempsRecord = this.timeouts.currTime;
+
 
     return (
-      <div>
-      <MonacoEditor
-           height={600}
-           width={window.innerWidth}
-           language='javascript'
-           theme='vs-dark'
-           value={this.state.value}
-           options={options}
-           editorDidMount={this.editorDidMount}
-           requireConfig={requireConfig}
-           events={this.events}
-           onChange={this.onChange}
-           onMouseMove={this.onMouseMove}
-         />
-         <img src={cursor} className="App-cursor"
-            style={{ width:'15px', position: 'absolute', left :this.state.cx +'px', top:this.state.cy +'px'}}
-         />
-         <button onClick={this.startReplay}> Replay </button>
-         {
-          (this.state.playing) &&
-          <button onClick={this.stop}> pause </button>
-         }
-         {
-           !this.state.playing && this.state.started &&
-           <button onClick={this.resume}> resume </button>
-         }
+      <div >
+
+        <div className='Rep'>
+          <MonacoEditor
+               height={window.innerHeight*0.8}
+               width={window.innerWidth/2}
+               language='javascript'
+               theme='vs-dark'
+               value={this.state.value}
+               options={options}
+               editorDidMount={this.editorDidMount}
+               requireConfig={requireConfig}
+               events={this.events}
+               onChange={this.onChange}
+               onMouseMove={this.onMouseMove}
+             />
+             <img src={cursor} className="App-cursor"
+                style={{ width:'15px', position: 'absolute', left :this.state.cx +'px', top:this.state.cy +'px'}}
+             />
+           </div>
+           {this.props.children}
+        <div >
+           <button onClick={this.startReplay}> Replay </button>
+           {
+            (this.state.playing) &&
+
+            <button onClick={this.stop}> pause </button>
+
+           }
+           {
+             !this.state.playing && this.state.started &&
+
+             <button onClick={this.resume}> resume </button>
+           }
+         </div>
       </div>
     );
   }

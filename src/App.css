@@ -18,15 +18,22 @@
 .App-intro {
   font-size: large;
 }
-ProgressBar {
-  position:absolute;
-  /* top: 50%;
-  left: 20%; */
-}
 
 .App-cursor{
   transition: all .3s;
 }
+button{
+  position: relative;
+}
+
+.Progress {
+    display: none;
+}
+
+.Rep:hover .Progress {
+    display: block;
+}
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }

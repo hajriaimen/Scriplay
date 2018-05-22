@@ -84,8 +84,8 @@ export default class Replay extends React.Component {
     return (
       <div>
         <MonacoEditor
-             height={600}
-             width={window.innerWidth}
+             height={window.innerHeight*0.8}
+             width={window.innerWidth/2}
              language='javascript'
              theme='vs-dark'
              value={this.value}
