@@ -1,13 +1,22 @@
 import React, { Component } from 'react';
 import { ReactMic } from 'react-mic';
 import style from './ReactRecorder.css';
-export  default class ReactRecorder extends React.Component {
+import AudioPlayBack from './AudioPlayBack.js'
+const styles =
+  {
+    "font-size": "48px",
+    "color": "red"
+  }
+var audioList = []
+export default class ReactRecorder extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       record: false,
       blobObject: null,
-      isRecording: false
+      isRecording: false,
+      blobURL: null,
+      audioList: null
     }
 
   }
@@ -16,30 +25,38 @@ export  default class ReactRecorder extends React.Component {
     console.log(' component DidMount');
   }
 
-  startRecording= () => {
+  startRecording = () => {
     this.setState({
       record: true,
       isRecording: true
     });
   }
 
-  stopRecording= () => {
+  stopRecording = (recordedBlob) => {
     this.setState({
       record: false,
-      isRecording: false
+      isRecording: false,
     });
+
+    console.log('the state now is :', this.state)
+
   }
 
-  onData(recordedBlob) {
+  onData = (recordedBlob) => {
     console.log('chunk of real-time data is: ', recordedBlob);
   }
 
-  onStop(recordedBlob) {
-    console.log('recordedBlob is: ', recordedBlob);
+  onStop = (recordedBlob) => {
+    audioList.push(recordedBlob)
+    this.setState({
+      audioList: audioList
+    })
+
   }
 
   render() {
     const { isRecording } = this.state;
+
     return (
       <div >
 
@@ -48,17 +65,21 @@ export  default class ReactRecorder extends React.Component {
           className="sound-wave"
           onStop={this.onStop}
           strokeColor="#000000"
-          backgroundColor="#3488C"
-          width= {window.innerWidth}
-        //  height= "100"
-         />
+          backgroundColor="#4081ff"
+          width={100}
+          height="100"
+        />
+        <button onClick={this.state.record ? this.stopRecording : this.startRecording}>{this.state.record ? "Stop" : "Start"}</button>
+        <i class="fa fa-microphone" style={styles}></i>
 
+      <br />
 
-            <button onTouchTap={this.startRecording} type="button">Start</button>
-            <button onTouchTap={this.stopRecording} type="button">Stop</button>
+      <div>
 
-
+        <AudioPlayBack url={this.state.audioList} />
       </div>
+      </div >
     );
   }
 }
+

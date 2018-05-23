@@ -45,16 +45,17 @@ class App extends Component {
                 {/* to fix:
                 the progress bar should show when hover on the bottom side of the edior */}
                 <Replay className='Rep' >
-                  <div className='Progress' style={{position:'absolute'}}>
+                  <div className='Progress' style={{ position: 'absolute' }}>
                     <ProgressBar />
                   </div>
                 </Replay>
                 <button onClick={this.togglePreview}>Preview</button>
               </div>
           )}
+          <ReactRecorder />
         </div>
       </div>
-  );}
+    );}
 }
 
 export default App;
