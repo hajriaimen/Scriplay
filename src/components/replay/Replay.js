@@ -43,6 +43,10 @@ export default class Replay extends React.Component {
              this.setState({
                value: event.value,
                currEvent: event
+             }, () =>{
+                   const model = this.refs.monaco.editor.getModel()
+                   const value = model.getValue()
+                   this.props.onChangeEditorValue(value)
              })
            }
          },event.timestamp - firstEvent.timestamp))
@@ -101,12 +105,17 @@ export default class Replay extends React.Component {
      this.startReplay()
    }
 
-   onChangeReplay(value){
-      const modelRep = this.refs.monaco.editor.getModel()
-      const valueRep = modelRep.getValue()
-      this.props.onChangeReplayValue(this.state.value)
-   }
-
+   // onChangeReplay(value){
+   //    const modelRep = this.refs.monaco.editor.getModel()
+   //    const valueRep = modelRep.getValue()
+   //    this.props.onChangeReplayValue(this.state.value)
+   // }
+   // onChange(value){
+   //
+   //   const modelRep = this.refs.monaco.editor.getModel()
+   //   const valueRep = modelRep.getValue()
+   //   this.props.onChangeReplayValue(this.state.value)
+   // }
    recordValue(array){
      this.props.recordLength(this.state.array[array.length].timestamp)
    }
