@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import MonacoEditor from 'react-monaco-editor';
 
-export default class Replay extends React.Component {
+export default class RecordEditor extends React.Component {
     constructor(props) {
      super(props);
      this.state = {
@@ -20,7 +20,7 @@ export default class Replay extends React.Component {
        window.document.addEventListener('mousemove', this.onMouseMove)
        this.setState({
          editorStates: [],
-         bla: true
+
        })
        this.recordLoop = window.setInterval(() => {
          this.setState({
@@ -40,12 +40,13 @@ export default class Replay extends React.Component {
      })
    }
 
+
    editorDidMount = (editor, monaco) => {
      this.editor = editor
      editor.focus();
    }
 
-   onChange = (newValue, e) => {
+    onChange = (newValue, e) => {
       if (this.state.recording) {
         this.setState({
             events: this.state.events.concat({
@@ -53,7 +54,11 @@ export default class Replay extends React.Component {
                 timestamp: Date.now(),
                 value: newValue
             })
-        }, () => window.localStorage.array = JSON.stringify(this.state.events))
+        }, () =>{ window.localStorage.array = JSON.stringify(this.state.events)
+              const model = this.refs.monaco.editor.getModel()
+              const value = model.getValue()
+              this.props.onChangeEditorValue(value)
+        })
       }
     }
 
@@ -68,7 +73,8 @@ export default class Replay extends React.Component {
             timestamp:Date.now()
           })
         },() =>window.localStorage.mouseArray= JSON.stringify(this.state.mouseEvents))
-     }
+    }
+
 
   render() {
     const requireConfig = {
@@ -82,8 +88,8 @@ export default class Replay extends React.Component {
       selectOnLineNumbers: true
     };
     return (
-      <div>
-        <MonacoEditor
+      <div >
+        <MonacoEditor ref="monaco"
              height={window.innerHeight*0.8}
              width={window.innerWidth/2}
              language='javascript'
@@ -94,7 +100,6 @@ export default class Replay extends React.Component {
              requireConfig={requireConfig}
              events={this.events}
              onChange={this.onChange}
-             //onMouseMove={this.onMouseMove}
            />
           {
             this.state.recording &&
