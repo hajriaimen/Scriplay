@@ -13,7 +13,6 @@ export default class Replay extends React.Component {
        timeouts: [],
        started: false,
        recordingTime:0,
-       // currTime:0
      }
    }
 
@@ -21,7 +20,6 @@ export default class Replay extends React.Component {
      this.editor = editor;
      editor.focus();
    }
-
 
    startReplay = () => {
      this.setState({
@@ -52,12 +50,9 @@ export default class Replay extends React.Component {
      }
 
      let editorStates = JSON.parse(window.localStorage.editorStates)
-     console.log(editorStates)
      for (var i = 0; i < editorStates.length; i++) {
        this.setState({
          timeouts: window.setTimeout((i) => {
-           console.log(editorStates[i], i)
-           console.log(this.editor.restoreViewState)
            this.editor.restoreViewState(editorStates[i])
          }, i * 1000, i)
        })
@@ -106,6 +101,16 @@ export default class Replay extends React.Component {
      this.startReplay()
    }
 
+   onChangeReplay(value){
+      const modelRep = this.refs.monaco.editor.getModel()
+      const valueRep = modelRep.getValue()
+      this.props.onChangeReplayValue(this.state.value)
+   }
+
+   recordValue(array){
+     this.props.recordLength(this.state.array[array.length].timestamp)
+   }
+
    render() {
     const requireConfig = {
        url: 'https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.1/require.min.js',
@@ -121,10 +126,10 @@ export default class Replay extends React.Component {
 
 
     return (
-      <div >
+      <div className={this.props.className}>
 
         <div className='Rep'>
-          <MonacoEditor
+          <MonacoEditor  ditor ref="monaco"
                height={window.innerHeight*0.8}
                width={window.innerWidth/2}
                language='javascript'

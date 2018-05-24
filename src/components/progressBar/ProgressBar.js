@@ -5,15 +5,25 @@ export default class ProgressBar extends Component {
   constructor(props){
     super(props);
     this.state = {
-    count:0
+      timer: null,
+      counter: 0
     }
   }
 
   componentDidMount(){
-    this.setState((prevState, props) => ({
-    count: prevState.count + 1
-    }));
+    let timer = setInterval(this.tick, 10000);
+   this.setState({timer});
   }
+  componentWillUnmount() {
+    this.clearInterval(this.state.timer);
+  }
+  tick() {
+    // this.setState({
+    //   counter: this.state.counter + 10
+    // });
+  }
+
+
   resume = () => {
     this.setState({
       playing: true,
@@ -21,11 +31,13 @@ export default class ProgressBar extends Component {
     })
     this.startReplay()
   }
+
   render() {
+
     return (
-      <div className='layout-page'>
-        <div id="myProgress">
-          <div id="myBar"style={{width:this.count +'%'}}></div>
+      <div className='layout-page' style = {{width:window.innerWidth/2}}>
+        <div id="myProgress" >
+          <div id="myBar"style={{width:this.state.counter}}></div>
         </div>
       </div>
     );

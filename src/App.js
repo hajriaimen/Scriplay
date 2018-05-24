@@ -12,14 +12,15 @@ class App extends Component {
      super(props);
      this.state = {
        recording: true,
-       value:''
+       editorValue:''
      }
    }
 
    onTouchTap(){
        this.setState({
          record: true,
-         isRecording: true}
+         isRecording: true
+       }
        );
    }
    togglePreview = () => {
@@ -27,25 +28,29 @@ class App extends Component {
        recording: !this.state.recording
      })
    }
+   onChangeEditorValue(newValue){
+     this.setState({
+       editorValue:newValue
+     });
+   }
   render() {
     const isRecording= this.state.recording;
     return(
       <div>
-        <Preview / >
+        <Preview editorValue={this.state.editorValue}/ >
         <div style={{ height:window.innerHeight*0.8+'px',   width:window.innerWidth*0.4, float:'left'}}>
           {isRecording ? (
             <div >
-                <RecordEditor  />
+                <RecordEditor  onChangeEditorValue={this.onChangeEditorValue.bind(this)}/>
                <button onClick={this.togglePreview}>Preview</button>
               </div>
           ) : (
               <div >
-
-
-                {/* to fix:
+              {/* to fix:
                 the progress bar should show when hover on the bottom side of the edior */}
-                <Replay className='Rep' >
-                  <div className='Progress' style={{ position: 'absolute' }}>
+                <Replay className='Rep' onChangeReplayValue={this.onChangeEditorValue.bind(this)}>
+
+                  <div className='Progress' >
                     <ProgressBar />
                   </div>
                 </Replay>
