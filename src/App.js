@@ -1,42 +1,50 @@
 import React, { Component } from 'react';
-import MonacoEditor from 'react-monaco-editor';
-import ReactRecorder from './components/recorder/ReactRecorder';
-import Replay from './components/replay/Replay';
-import ProgressBar from './components/progressBar/ProgressBar';
-import RecordEditor from './components/RecordEditor'
-import Preview from './components/preview/Preview';
+
+import Home from './components/home/Home'
+// import Create from './components/create/Create'
+import Account from './components/account/Account'
 import './App.css'
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
 
 class App extends Component {
-    constructor(props) {
-     super(props);
-     this.state = {
-       recording: true,
-       editorValue:''
-     }
-   }
-
-   onTouchTap(){
-       this.setState({
-         record: true,
-         isRecording: true
-       }
-       );
-   }
-   togglePreview = () => {
-     this.setState({
-       recording: !this.state.recording
-     })
-   }
-   onChangeEditorValue(newValue){
-     this.setState({
-       editorValue:newValue
-     });
-   }
+  constructor(props){
+    super(props)
+    this.state ={
+      loc:window.location.href.split('/')
+    }
+  }
   render() {
-    const isRecording= this.state.recording;
     return(
-      <div>
+      <Router>
+          <div class="card text-center">
+            <div class="card-header">
+              <ul class="nav nav-tabs card-header-tabs">
+                <li class="nav-item">
+                  <a className={this.state.loc[this.state.loc.length-1] == 'Home'? "nav-link active": "nav-link"} href="Home">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a className={this.state.loc[this.state.loc.length-1] == 'Create'? "nav-link active": "nav-link"} href="Create">Create</a>
+                </li>
+                <li class="nav-item ml-auto">
+                  <a className={this.state.loc[this.state.loc.length-1] == 'Account'? "nav-link active": "nav-link"} href="Account">Account</a>
+                </li>
+              </ul>
+            </div>
+            <div class="card-body">
+            </div>
+            <Route exact path="/Home" component={Home} />
+            {/* <Route path="/Create" component={Create} /> */}
+            <Route path="/Account" component={Account} />
+          </div>
+        </Router>
+    )
+    }
+}
+
+export default App;
+
+  {/* <div>
         <Preview editorValue={this.state.editorValue}/ >
         <div style={{ height:window.innerHeight*0.8+'px',   width:window.innerWidth*0.4, float:'left'}}>
           {isRecording ? (
@@ -46,8 +54,6 @@ class App extends Component {
               </div>
           ) : (
               <div >
-              {/* to fix:
-                the progress bar should show when hover on the bottom side of the edior */}
                 <Replay className='Rep' onChangeReplayValue={this.onChangeEditorValue.bind(this)}>
 
                   <div className='Progress' >
@@ -59,8 +65,4 @@ class App extends Component {
           )}
           <ReactRecorder />
         </div>
-      </div>
-    );}
-}
-
-export default App;
+      </div> */}
