@@ -8,7 +8,8 @@ export default class RecordEditor extends React.Component {
        events:[],
        mouseEvents:[],
        recording: false,
-       editorStates: []
+       editorStates: [],
+       isToggleOn: true
      }
    }
 

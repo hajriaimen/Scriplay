@@ -68,6 +68,7 @@ export default class ReactRecorder extends React.Component {
           backgroundColor="#4081ff"
           width={100}
           height="100"
+          defaultValue="<h1></h1>"
         />
         <button onClick={this.state.record ? this.stopRecording : this.startRecording}>{this.state.record ? "Stop" : "Start"}</button>
         <i class="fa fa-microphone" style={styles}></i>
@@ -75,11 +76,9 @@ export default class ReactRecorder extends React.Component {
       <br />
 
       <div>
-
-        <AudioPlayBack url={this.state.audioList} />
+        <AudioPlayBack className='playBack 'url={this.state.audioList} />
       </div>
       </div >
     );
   }
 }
-

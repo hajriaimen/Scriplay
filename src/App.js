@@ -33,6 +33,7 @@ class App extends Component {
        editorValue:newValue
      });
    }
+
   render() {
     const isRecording= this.state.recording;
     return(
@@ -42,22 +43,20 @@ class App extends Component {
           {isRecording ? (
             <div >
                 <RecordEditor  onChangeEditorValue={this.onChangeEditorValue.bind(this)}/>
+                <ReactRecorder />
                <button onClick={this.togglePreview}>Preview</button>
               </div>
           ) : (
               <div >
               {/* to fix:
                 the progress bar should show when hover on the bottom side of the edior */}
-                <Replay className='Rep' onChangeReplayValue={this.onChangeEditorValue.bind(this)}>
+                <Replay className='Rep' onChangeEditorValue={this.onChangeEditorValue.bind(this)}>
 
-                  <div className='Progress' >
-                    <ProgressBar />
-                  </div>
                 </Replay>
                 <button onClick={this.togglePreview}>Preview</button>
               </div>
           )}
-          <ReactRecorder />
+
         </div>
       </div>
     );}

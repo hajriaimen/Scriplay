@@ -4,7 +4,7 @@ export default class Preview extends Component{
     constructor(props){
       super(props);
   }
-  
+
   render(){
     let template1="<!doctype html>\n" +
     "<html>\n\t" +
@@ -12,10 +12,10 @@ export default class Preview extends Component{
     "<meta charset=\"utf-8\">\n\t\t" +
     "<title>Test</title>\n\n\t\t\n\t" +
     "</head>\n\t" +
-    "<body>\n\t\n\t"+
-    "<h1>\n\t\n\t";
+    "<body>\n\t\n\t";
 
-    let template2="</h1>\n"+
+
+    let template2=
     "</body>\n"+
     "</html>";
 
