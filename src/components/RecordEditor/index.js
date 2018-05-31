@@ -7,8 +7,9 @@ export default class RecordEditor extends React.Component {
      this.state = {
        events:[],
        mouseEvents:[],
-       recording: false,
-       editorStates: []
+      //  recording: false,
+       editorStates: [],
+      //  isRecording:false
      }
    }
 
@@ -102,12 +103,12 @@ export default class RecordEditor extends React.Component {
              onChange={this.onChange}
            />
           {
-            this.state.recording &&
-            <button className="btn btn-default btn-sm " onClick={this.toggleRecording}> Stop </button>
+            this.props.isRecording &&
+            <button className="btn btn-default btn-sm " onClick={()=>this.props.changeState()}> Stop </button>
           }
           {
-            !this.state.recording &&
-            <button className="btn btn-default btn-sm " onClick={this.toggleRecording}> Record </button>
+            !this.props.isRecording &&
+            <button className="btn btn-default btn-sm " onClick={()=>this.props.changeState()}> Record </button>
           }
 
       </div>

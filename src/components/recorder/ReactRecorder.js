@@ -12,11 +12,8 @@ export default class ReactRecorder extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      record: false,
       blobObject: null,
-      isRecording: false,
       blobURL: null,
-      audioList: null
     }
 
   }
@@ -24,29 +21,12 @@ export default class ReactRecorder extends React.Component {
   componentDidMount() {
     console.log(' component DidMount');
   }
-
-  startRecording = () => {
-    this.setState({
-      record: true,
-      isRecording: true
-    });
-  }
-
-  stopRecording = (recordedBlob) => {
-    this.setState({
-      record: false,
-      isRecording: false,
-    });
-
-    console.log('the state now is :', this.state)
-
-  }
-
   onData = (recordedBlob) => {
     console.log('chunk of real-time data is: ', recordedBlob);
   }
 
   onStop = (recordedBlob) => {
+    console.log('here i am')
     audioList.push(recordedBlob)
     this.setState({
       audioList: audioList
@@ -61,9 +41,9 @@ export default class ReactRecorder extends React.Component {
       <div >
         <div className="container-fluid row " >
           <ReactMic
-            record={this.state.record}
+            record={this.props.isRecording}
             className="sound-wave col-md-6"
-            onStop={this.onStop}
+            onStop={this.props.saveRecording}
             strokeColor="#000000"
             backgroundColor="#4081ff"
             width={window.innerWidth}
@@ -71,13 +51,23 @@ export default class ReactRecorder extends React.Component {
           />
         </div>
         <div className="container-fluid row col-md-6">
-          <AudioPlayBack url={this.state.audioList} />
+
+          <AudioPlayBack url={this.props.audioList} />
         </div>
         <div className="container-fluid row col-md-7">
+
+                {
+            this.props.isRecording &&
+            <button className="btn btn-default btn-sm " onClick={()=>this.props.changeState()}> Stop </button>
+          }
+          {
+            !this.props.isRecording && <button className="btn btn-default btn-sm " onClick={()=>this.props.changeState()}> Record </button>
+          }
+
           {/* <button onClick={this.state.record ? this.stopRecording : this.startRecording}>{this.state.record ? "Stop" : "Start"}</button> */}
-          <button type="button" className="btn btn-default btn-md offset-md-5" onClick={this.state.record ? this.stopRecording : this.startRecording}>{this.state.record ? "Stop" : "Start"}>
+          {/* <button type="button" className="btn btn-default btn-md offset-md-5" onClick={this.state.record ? this.stopRecording : this.startRecording}>{this.state.record ? "Stop" : "Start"}
             <span className="glyphicon glyphicon-record"></span>
-          </button>
+          </button> */}
         </div>
 
       </div >

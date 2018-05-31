@@ -147,18 +147,14 @@ export default class Replay extends React.Component {
              />
            </div>
            {this.props.children}
-        <div >
-           <button className="btn btn-default btn-sm " onClick={this.startReplay}> Replay </button>
+        <div>
+           <button className="btn btn-default btn-sm " onClick={this.startReplay}>Replay</button>
            {
-            (this.state.playing) &&
-
-            <button className="btn btn-default btn-sm " onClick={this.stop}> pause </button>
-
+            (this.state.playing) && <button className="btn btn-default btn-sm " onClick={this.stop}>Pause</button>
            }
            {
              !this.state.playing && this.state.started &&
-
-             <button className="btn btn-default btn-sm " onClick={this.resume}> resume </button>
+             <button className="btn btn-default btn-sm " onClick={this.resume}>Resume</button>
            }
          </div>
       </div>
