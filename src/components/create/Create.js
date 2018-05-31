@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import MonacoEditor from 'react-monaco-editor';
 
-import ReactRecorder from './components/recorder';
+import ReactRecorder from '../recorder/ReactRecorder';
 // import RecordEditor from './components/RecordEditor';
 // import Replay from './components/replay';
 // import ProgressBar from './components/progressBar';
@@ -34,7 +34,7 @@ export default class Create extends Component{
       editorValue:newValue
     });
   }
-  
+
   render(){
     return <h1>hello World</h1>
     // const isRecording= this.state.recording;

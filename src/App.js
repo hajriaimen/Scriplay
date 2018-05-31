@@ -17,8 +17,14 @@ class App extends Component {
   constructor(props){
     super(props)
     this.state ={
+      editorValue:'',
       loc:window.location.href.split('/')
     }
+  }
+  onChangeEditorValue(newValue){
+    this.setState({
+      editorValue:newValue
+    });
   }
   render() {
     return(
@@ -46,7 +52,7 @@ class App extends Component {
                 </ul>
                 <form class="form-inline my-2 my-lg-0">
                   <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
-                  <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
+                  <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit" >Search</button>
                 </form>
               </div>
             </nav>
@@ -61,8 +67,8 @@ class App extends Component {
                    return (
                      <div>
                         <div className="container-fluid row" >
-                          <RecordEditor className="col-md-6"/>
-                          <Preview className="col-md-6"/>
+                          <RecordEditor className="col-md-6" onChangeEditorValue={this.onChangeEditorValue.bind(this)}/>
+                          <Preview className="col-md-6" editorValue={this.state.editorValue}/>
                         </div>
                         <div className="container-fluid row" >
                           <ReactRecorder className="col-md-6"/>
@@ -77,8 +83,8 @@ class App extends Component {
                    return (
                      <div>
                         <div className="container-fluid row">
-                          <Replay className="col"/>
-                          <Preview className="col " />
+                          <Replay className="col" onChangeReplayValue={this.onChangeEditorValue.bind(this)}/>
+                          <Preview className="col" editorValue={this.state.editorValue}/>
                         </div>
                       </div>
                      );

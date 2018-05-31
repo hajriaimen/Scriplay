@@ -107,7 +107,7 @@ export default class RecordEditor extends React.Component {
           }
           {
             !this.state.recording &&
-            <button className="btn btn-default btn-sm " onClick={this.toggleRecording}> Record </button>
+            <button onClick={this.toggleRecording}> Record </button>
           }
 
       </div>

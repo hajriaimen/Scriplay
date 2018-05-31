@@ -13,6 +13,7 @@ export default class Replay extends React.Component {
        timeouts: [],
        started: false,
        recordingTime:0,
+       value:''
      }
    }
 
@@ -43,7 +44,9 @@ export default class Replay extends React.Component {
              this.setState({
                value: event.value,
                currEvent: event
-             })
+             },()=>{ const modelRep = this.refs.monaco.editor.getModel()
+              const valueRep = modelRep.getValue()
+              this.props.onChangeReplayValue(valueRep)})
            }
          },event.timestamp - firstEvent.timestamp))
        })
@@ -101,11 +104,11 @@ export default class Replay extends React.Component {
      this.startReplay()
    }
 
-   onChangeReplay(value){
-      const modelRep = this.refs.monaco.editor.getModel()
-      const valueRep = modelRep.getValue()
-      this.props.onChangeReplayValue(this.state.value)
-   }
+   onChangeReplay(){
+     const modelRep = this.refs.monaco.editor.getModel()
+     const valueRep = modelRep.getValue()
+     this.props.onChangeReplayValue(valueRep)
+  }
 
    recordValue(array){
      this.props.recordLength(this.state.array[array.length].timestamp)
@@ -129,7 +132,7 @@ export default class Replay extends React.Component {
       <div className={this.props.className}>
 
         <div className='Rep'>
-          <MonacoEditor  ditor ref="monaco"
+          <MonacoEditor   ref="monaco"
                height={window.innerHeight*0.8}
                width={window.innerWidth/2}
                language='javascript'
@@ -147,18 +150,14 @@ export default class Replay extends React.Component {
              />
            </div>
            {this.props.children}
-        <div >
-           <button className="btn btn-default btn-sm " onClick={this.startReplay}> Replay </button>
+        <div>
+           <button className="btn btn-default btn-sm " onClick={this.startReplay}>Replay</button>
            {
-            (this.state.playing) &&
-
-            <button className="btn btn-default btn-sm " onClick={this.stop}> pause </button>
-
+            (this.state.playing) && <button className="btn btn-default btn-sm " onClick={this.stop}>Pause</button>
            }
            {
              !this.state.playing && this.state.started &&
-
-             <button className="btn btn-default btn-sm " onClick={this.resume}> resume </button>
+             <button className="btn btn-default btn-sm " onClick={this.resume}>Resume</button>
            }
          </div>
       </div>
