@@ -59,27 +59,28 @@ export default class ReactRecorder extends React.Component {
 
     return (
       <div >
+        <div className="container-fluid row " >
+          <ReactMic
+            record={this.state.record}
+            className="sound-wave col-md-6"
+            onStop={this.onStop}
+            strokeColor="#000000"
+            backgroundColor="#4081ff"
+            width={window.innerWidth}
+            height="100"
+          />
+        </div>
+        <div className="container-fluid row col-md-6">
+          <AudioPlayBack url={this.state.audioList} />
+        </div>
+        <div className="container-fluid row col-md-7">
+          {/* <button onClick={this.state.record ? this.stopRecording : this.startRecording}>{this.state.record ? "Stop" : "Start"}</button> */}
+          <button type="button" className="btn btn-default btn-md offset-md-5" onClick={this.state.record ? this.stopRecording : this.startRecording}>{this.state.record ? "Stop" : "Start"}>
+            <span className="glyphicon glyphicon-record"></span>
+          </button>
+        </div>
 
-        <ReactMic
-          record={this.state.record}
-          className="sound-wave"
-          onStop={this.onStop}
-          strokeColor="#000000"
-          backgroundColor="#4081ff"
-          width={100}
-          height="100"
-        />
-        <button onClick={this.state.record ? this.stopRecording : this.startRecording}>{this.state.record ? "Stop" : "Start"}</button>
-        <i class="fa fa-microphone" style={styles}></i>
-
-      <br />
-
-      <div>
-
-        <AudioPlayBack url={this.state.audioList} />
-      </div>
       </div >
     );
   }
 }
-

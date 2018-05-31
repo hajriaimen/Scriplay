@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
 
 import Home from './components/home/Home'
-// import Create from './components/create/Create'
-import Account from './components/account/Account'
-import './App.css'
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import RecordEditor from './components/RecordEditor/index'
+import Preview from './components/preview/Preview.js'
+import ReactRecorder from './components/recorder/ReactRecorder.js'
 
+import Replay from './components/replay/Replay'
+import Account from './components/account/Account'
+import Footer from './components/footer/Footer'
+import logo from './logo.png';
+import './App.css'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { Button, Modal, ModalBody, ModalHeader, ModalFooter,Card } from 'mdbreact';
 
 class App extends Component {
   constructor(props){
@@ -17,25 +23,73 @@ class App extends Component {
   render() {
     return(
       <Router>
-          <div class="card text-center">
-            <div class="card-header">
-              <ul class="nav nav-tabs card-header-tabs">
-                <li class="nav-item">
-                  <a className={this.state.loc[this.state.loc.length-1] == 'Home'? "nav-link active": "nav-link"} href="Home">Home</a>
-                </li>
-                <li class="nav-item">
-                  <a className={this.state.loc[this.state.loc.length-1] == 'Create'? "nav-link active": "nav-link"} href="Create">Create</a>
-                </li>
-                <li class="nav-item ml-auto">
-                  <a className={this.state.loc[this.state.loc.length-1] == 'Account'? "nav-link active": "nav-link"} href="Account">Account</a>
-                </li>
-              </ul>
+          <div className="card text-center">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                  <a class="navbar-brand" href="Home">
+                     <img src={logo} width="200" height="30" alt=""/>
+                   </a>
+                  <li class="nav-item active">
+                    <a class="nav-link" href="Home">Home <span class="sr-only">(current)</span></a>
+                  </li>
+                  <li class="nav-item active">
+                    <a class="nav-link" href="Account">Account <span class="sr-only">(current)</span></a>
+                  </li>
+                  <li class="nav-item active">
+                    <a class="nav-link" href="Account">Account <span class="sr-only">(current)</span></a>
+                  </li>
+                  <li class="nav-item active">
+                    <a class="nav-link" href="Account">Account <span class="sr-only">(current)</span></a>
+                  </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                  <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
+                  <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
+                </form>
+              </div>
+            </nav>
+            <div className="container-fluid">
+
+              <Route exact path="/Home" component={Home} />
+              <Route exact path="/" component={Home} />
+              <Route path="/Account" component={Account} />
+
+              {/* <Route exact path="/instructor" component={RecordEditor,Replay} /> */}
+              <Route exact path="/instructor" render={() => {
+                   return (
+                     <div>
+                        <div className="container-fluid row" >
+                          <RecordEditor className="col-md-6"/>
+                          <Preview className="col-md-6"/>
+                        </div>
+                        <div className="container-fluid row" >
+                          <ReactRecorder className="col-md-6"/>
+                        </div>
+                    </div>
+                     );
+              }}/>
+
+              {/* <Route exact path="/student" component={Replay} /> */}
+
+              <Route exact path="/student" render={() => {
+                   return (
+                     <div>
+                        <div className="container-fluid row">
+                          <Replay className="col"/>
+                          <Preview className="col " />
+                        </div>
+                      </div>
+                     );
+              }}/>
+
+              {/* <Route path="/Create" component={Create} /> */}
+
             </div>
-            <div class="card-body">
+            <div>
+              <Footer/>
             </div>
-            <Route exact path="/Home" component={Home} />
-            {/* <Route path="/Create" component={Create} /> */}
-            <Route path="/Account" component={Account} />
           </div>
         </Router>
     )
@@ -43,26 +97,3 @@ class App extends Component {
 }
 
 export default App;
-
-  {/* <div>
-        <Preview editorValue={this.state.editorValue}/ >
-        <div style={{ height:window.innerHeight*0.8+'px',   width:window.innerWidth*0.4, float:'left'}}>
-          {isRecording ? (
-            <div >
-                <RecordEditor  onChangeEditorValue={this.onChangeEditorValue.bind(this)}/>
-               <button onClick={this.togglePreview}>Preview</button>
-              </div>
-          ) : (
-              <div >
-                <Replay className='Rep' onChangeReplayValue={this.onChangeEditorValue.bind(this)}>
-
-                  <div className='Progress' >
-                    <ProgressBar />
-                  </div>
-                </Replay>
-                <button onClick={this.togglePreview}>Preview</button>
-              </div>
-          )}
-          <ReactRecorder />
-        </div>
-      </div> */}

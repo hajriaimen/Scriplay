@@ -1,51 +1,7 @@
-.App {
-  text-align: center;
-  background-color:
+{
+  margin: 0px;
+  padding: 0px;
 }
-
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-.App-cursor{
-  transition: all .3s;
-}
-button{
-  display: block;
-  position: relative;
-  bottom:0;
-}
-
-.Progress {
-    display: none ;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-    border: 3px solid #73AD21;
-}
-
-.Rep:hover .Progress {
-    position: relative;
-    display: inline-block;
-    overflow: hidden;
-     border: 3px solid #73AD21;
-
-}
-
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }

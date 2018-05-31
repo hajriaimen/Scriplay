@@ -4,7 +4,7 @@ export default class Preview extends Component{
     constructor(props){
       super(props);
   }
-  
+
   render(){
     let template1="<!doctype html>\n" +
     "<html>\n\t" +
@@ -22,7 +22,7 @@ export default class Preview extends Component{
     return(
       <div>
         <iframe srcdoc={template1+ this.props.editorValue+template2}
-                style={{height:window.innerHeight*0.8, width:window.innerWidth*0.491,float:'right'}}>
+                style={{height:window.innerHeight*0.8, width:window.innerWidth*0.4,float:'right'}}>
         </iframe>
       </div>
 
