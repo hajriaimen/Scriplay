@@ -4,8 +4,6 @@ import Home from './components/home/Home'
 import RecordEditor from './components/RecordEditor/index'
 import Preview from './components/preview/Preview.js'
 import ReactRecorder from './components/recorder/ReactRecorder.js'
-import Create from './components/create/Create'
-
 import Replay from './components/replay/Replay'
 import Account from './components/account/Account'
 import Footer from './components/footer/Footer'
@@ -13,7 +11,7 @@ import logo from './logo.png';
 import './App.css'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
-// import { Button, Modal, ModalBody, ModalHeader, ModalFooter,Card } from 'mdbreact';
+import { Button, Modal, ModalBody, ModalHeader, ModalFooter,Card } from 'mdbreact';
 
 class App extends Component {
   constructor(props){
