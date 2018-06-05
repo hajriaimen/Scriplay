@@ -1,25 +1,29 @@
 {
-  "name": "submission",
+  "name": "submissions",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
   "properties": {
-    "userId": {
+    "editorData": {
+      "type": "object",
+      "required": true
+    },
+    "codeData": {
+      "type": "object",
+      "required": true
+    },
+    "name": {
       "type": "string",
       "required": true
     },
-    "contentLoc": {
+    "userId": {
       "type": "string",
       "required": true
     },
     "size": {
       "type": "number",
-      "required": true
-    },
-    "contentName": {
-      "type": "string",
       "required": true
     },
     "createdAt": {

@@ -2,5 +2,16 @@
   "db": {
     "name": "db",
     "connector": "memory"
+  },
+  "local": {
+    "host": "localhost",
+    "port": 27017,
+    "url": "",
+    "database": "scriplay",
+    "password": "",
+    "name": "local",
+    "user": "",
+    "connector": "mongodb"
   }
+  
 }
