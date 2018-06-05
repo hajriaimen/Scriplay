@@ -26,6 +26,10 @@ class App extends Component {
       editorValue:newValue
     });
   }
+  save = () => {
+    //send post request to DB for this component
+  }
+
   render() {
     return(
       <Router>

@@ -20,9 +20,12 @@ export default class ReactRecorder extends React.Component {
     }
 
   }
-
+  save =()=>{
+    //send post request to DB for this component
+    
+  }
   componentDidMount() {
-    console.log(' component DidMount');
+    console.log('component DidMount');
   }
 
   startRecording = () => {
