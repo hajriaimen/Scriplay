@@ -1,5 +1,7 @@
 'use strict';
-
-module.exports = function(Submissions) {
-
+var path = require('path')
+var multer = require('multer')
+var loopback = require('loopback')
+module.exports = function (Submissions) {
+    
 };

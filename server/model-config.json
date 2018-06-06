@@ -38,5 +38,9 @@
   "submissions": {
     "dataSource": "local",
     "public": true
+  },
+  "container": {
+    "dataSource": "storage",
+    "public": true
   }
 }

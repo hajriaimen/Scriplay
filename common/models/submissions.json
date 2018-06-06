@@ -6,12 +6,12 @@
     "validateUpsert": true
   },
   "properties": {
-    "editorData": {
+    "video": {
       "type": "object",
       "required": true
     },
-    "codeData": {
-      "type": "object",
+    "voice": {
+      "type": "string",
       "required": true
     },
     "name": {
