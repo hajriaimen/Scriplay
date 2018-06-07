@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import MonacoEditor from 'react-monaco-editor';
+import axios from 'axios';
 import cursor from './cursor.png';
 import './Replay.css';
 //import ProgressBar from '../progressBar/ProgressBar';
@@ -20,6 +21,11 @@ export default class Replay extends React.Component {
    editorDidMount = (editor, monaco) => {
      this.editor = editor;
      editor.focus();
+    //  axios.get(`https://jsonplaceholder.typicode.com/users`)
+    //   .then(res => {
+    //     const persons = res.data;
+    //     this.setState({ persons });
+    // })
    }
 
    startReplay = () => {
@@ -44,9 +50,9 @@ export default class Replay extends React.Component {
              this.setState({
                value: event.value,
                currEvent: event
-             },()=>{ const modelRep = this.refs.monaco.editor.getModel()
-              const valueRep = modelRep.getValue()
-              this.props.onChangeReplayValue(valueRep)})
+             },()=>{const modelRep = this.refs.monaco.editor.getModel()
+                    const valueRep = modelRep.getValue()
+                    this.props.onChangeReplayValue(valueRep)})
            }
          },event.timestamp - firstEvent.timestamp))
        })

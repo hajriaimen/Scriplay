@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import MonacoEditor from 'react-monaco-editor';
-
+import axios from 'axios';
 export default class RecordEditor extends React.Component {
     constructor(props) {
      super(props);
@@ -27,7 +27,13 @@ export default class RecordEditor extends React.Component {
            editorStates: this.state.editorStates.concat(this.editor.saveViewState())
          }, () => {
            window.localStorage.editorStates = JSON.stringify(this.state.editorStates)
-         })
+         }
+      //    axios.post(`https://jsonplaceholder.typicode.com/users`, { user })
+          // .then(res => {
+          //   console.log(res);
+          //   console.log(res.data);
+          // })
+       )
        }, 1000)
      } else {
        window.document.removeEventListener('mousemove', this.onMouseMove)
