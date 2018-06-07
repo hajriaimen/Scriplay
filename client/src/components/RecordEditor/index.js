@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import MonacoEditor from 'react-monaco-editor';
-
+import './index.css'
 export default class RecordEditor extends React.Component {
   constructor(props) {
     super(props);
@@ -27,7 +27,12 @@ export default class RecordEditor extends React.Component {
           editorStates: this.state.editorStates.concat(this.editor.saveViewState())
         }, () => {
           window.localStorage.editorStates = JSON.stringify(this.state.editorStates)
-        })
+        }
+            //axios.post(`https://jsonplaceholder.typicode.com/users`, { user })
+            // .then(res => {
+            //   console.log(res);
+            //   console.log(res.data);
+)
       }, 1000)
     } else {
       window.document.removeEventListener('mousemove', this.onMouseMove)
@@ -89,7 +94,7 @@ export default class RecordEditor extends React.Component {
       selectOnLineNumbers: true
     };
     return (
-      <div >
+      <div className="rec">
         <MonacoEditor ref="monaco"
           height={window.innerHeight * 0.8}
           width={window.innerWidth / 2}
@@ -104,11 +109,11 @@ export default class RecordEditor extends React.Component {
         />
         {
           this.state.recording &&
-          <button className="btn btn-default btn-sm center-block" onClick={this.toggleRecording}> Stop </button>
+          <button className="btn btn-default btn-lg offset-md-5"  onClick={this.toggleRecording}> Stop </button>
         }
         {
           !this.state.recording &&
-          <button className="btn btn-default btn-sm center-block" onClick={this.toggleRecording}> Record </button>
+          <button className="btn btn-default btn-lg offset-md-5" onClick={this.toggleRecording}> Record </button>
         }
 
       </div>

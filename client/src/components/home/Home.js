@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import code4 from './code2.jpg';
+import code4 from './home.jpg';
 import inst from './inst.jpg';
 import student from './student.jpg';
+import './home.css';
 import { Button, Card, CardBody, CardImage, CardTitle, CardText } from 'mdbreact';
 
 
@@ -14,27 +15,25 @@ export default class Home extends Component{
   render(){
       return(
         <div className="container-fluid " >
-          <div className="row" id="bg" style={{ backgroundImage: "url(" + code4 + ")",opacity:'0.9' }}>
-            {/* <img className='col' src={code4} style={{opacity:'0.5'}}/> */}
-            <div className="cardsRid row col-md-6 offset-md-3">
-              <div className="card" id="card2"  style={{width: '18rem'}}>
-                <img className="card-img-top" src={inst} alt="Card image cap"/>
-                <div className="card-body">
-                  <h5 className="card-title">Card title</h5>
-                  <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <a href="/instructor" className="btn btn-primary">Instructor track  </a>
+          <header className="masthead text-center text-white d-flex">
+            <div className="container my-auto">
+              <div className="row">
+                <div className="col-lg-10 mx-auto">
+                  <h1 className="text-uppercase">
+                    <strong>new interactive way to learn code </strong>
+                  </h1>
+
                 </div>
-              </div>
-              <div className="card" id="card2" style={{width: '18rem'}}>
-                <img className="card-img-top" src={student} alt="Card image cap"/>
-                <div className="card-body">
-                  <h5 className="card-title">Card title</h5>
-                  <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <a href="/student" className="btn btn-primary">Student Track</a>
+                <div className="col-lg-8 mx-auto">
+                  <p className="text-faded mb-5">Scriplay is an interactive way to make tutorials and learn code in interactive
+                    playground using the minimum of resources
+                  </p>
+                  <a className="btn btn-primary btn-lg js-scroll-trigger col-6" href="/Instructor">Instructor</a>
+                  <a className="btn btn-primary btn-lg  js-scroll-trigger col-6" href="/Student">Student</a>
                 </div>
               </div>
             </div>
-          </div>
+          </header>
         </div>
 
     );

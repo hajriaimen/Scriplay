@@ -34,29 +34,29 @@ class App extends Component {
     return(
       <Router>
           <div className="card ">
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top">
 
-              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <div className="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                  <a class="navbar-brand" href="Home">
+                  <a className="navbar-brand" href="Home">
                      <img src={logo} width="200" height="30" alt=""/>
                    </a>
-                  <li class="nav-item active">
-                    <a class="nav-link" href="Home">Home <span class="sr-only">(current)</span></a>
+                  <li className="nav-item outline">
+                    <a className="nav-link " href="Home"><b>Home</b> <span class="sr-only">(current)</span></a>
                   </li>
-                  <li class="nav-item active">
-                    <a class="nav-link" href="/Instructor">Instructor <span class="sr-only">(current)</span></a>
+                  <li className="nav-item  outline">
+                    <a className="nav-link" href="/Instructor"><b>Instructor</b> <span className="sr-only">(current)</span></a>
                   </li>
-                  <li class="nav-item active">
-                    <a class="nav-link" href="/Student">Student <span class="sr-only">(current)</span></a>
+                  <li className="nav-item outline">
+                    <a className="nav-link " href="/Student"><b>Student</b> <span class="sr-only">(current)</span></a>
                   </li>
-                  <li class="nav-item active">
-                    <a class="nav-link" href="Account">Account <span class="sr-only">(current)</span></a>
+                  <li class="nav-item outline">
+                    <a class="nav-link" href="Account"><b>Account</b> <span class="sr-only">(current)</span></a>
                   </li>
                 </ul>
-                <form class="form-inline my-2 my-lg-0 text-center">
-                  <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
-                  <button class="btn btn-outline-secondary my-2 my-sm-0 " type="submit" >Search</button>
+                <form className="form-inline my-2 my-lg-0 text-center">
+                  <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
+                  <button className="btn btn-outline-secondary my-2 my-sm-0 " type="submit" >Search</button>
                 </form>
               </div>
             </nav>

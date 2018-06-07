@@ -20,6 +20,11 @@ export default class Replay extends React.Component {
    editorDidMount = (editor, monaco) => {
      this.editor = editor;
      editor.focus();
+     //  axios.get(`https://jsonplaceholder.typicode.com/users`)
+    //   .then(res => {
+    //     const persons = res.data;
+    //     this.setState({ persons });
+    // })
    }
 
    startReplay = () => {
@@ -129,7 +134,7 @@ export default class Replay extends React.Component {
 
 
     return (
-      <div className={this.props.className}>
+      <div className={this.props.className} >
 
         <div className='Rep'>
           <MonacoEditor   ref="monaco"
@@ -151,15 +156,16 @@ export default class Replay extends React.Component {
            </div>
            {this.props.children}
         <div>
-           <button className="btn btn-default btn-sm " onClick={this.startReplay}>Replay</button>
+           <button className="btn btn-default btn-lg offset-md-4   " onClick={this.startReplay}>Replay</button>
            {
-            (this.state.playing) && <button className="btn btn-default btn-sm " onClick={this.stop}>Pause</button>
+            (this.state.playing) && <button className="btn btn-default btn-lg " onClick={this.stop}>Pause</button>
            }
            {
              !this.state.playing && this.state.started &&
-             <button className="btn btn-default btn-sm " onClick={this.resume}>Resume</button>
+             <button className="btn btn-default btn-lg " onClick={this.resume}>Resume</button>
            }
          </div>
+
       </div>
     );
   }
