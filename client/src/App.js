@@ -17,9 +17,15 @@ class App extends Component {
   constructor(props){
     super(props)
     this.state ={
+      recordState:'',
       editorValue:'',
       loc:window.location.href.split('/')
     }
+  }
+  onRecord(newValue){
+    this.setState({
+      recordState:newValue
+    });
   }
   onChangeEditorValue(newValue){
     this.setState({
@@ -71,11 +77,11 @@ class App extends Component {
                    return (
                      <div>
                         <div className="container-fluid row" >
-                          <RecordEditor className="col-md-6" onChangeEditorValue={this.onChangeEditorValue.bind(this)}/>
+                          <RecordEditor className="col-md-6" onChangeEditorValue={this.onChangeEditorValue.bind(this)} onRecord={this.onRecord.bind(this)}/>
                           <Preview className="col-md-6" editorValue={this.state.editorValue}/>
                         </div>
                         <div className="container-fluid row" >
-                          <ReactRecorder className="col-md-6"/>
+                          <ReactRecorder className="col-md-6" onRecord={this.state.recordState}/>
                         </div>
                     </div>
                      );
