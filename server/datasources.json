@@ -18,5 +18,15 @@
     "connector": "loopback-component-storage",
     "provider": "filesystem",
     "root": "./server/storage"
+  },
+  "prod": {
+    "host": "ds247330.mlab.com",
+    "port": 47330,
+    "url": "mongodb://<dbuser>:<dbpassword>@ds247330.mlab.com:47330/scriplay",
+    "database": "scriplay",
+    "password": "",
+    "name": "prod",
+    "user": "",
+    "connector": "mongodb"
   }
 }

@@ -25,7 +25,7 @@ var request = require("request");
 var options = {
     method: 'POST',
     url: 'http://localhost:3000/api/containers',
-    body: { name: 'someNewContainer' },
+    body: { name: 'YahayaB' },
     json: true
 };
 

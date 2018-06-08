@@ -14,32 +14,32 @@
     ]
   },
   "User": {
-    "dataSource": "local"
+    "dataSource": "prod"
   },
   "AccessToken": {
-    "dataSource": "local",
+    "dataSource": "prod",
     "public": false
   },
   "ACL": {
-    "dataSource": "local",
+    "dataSource": "prod",
     "public": false
   },
   "RoleMapping": {
-    "dataSource": "local",
+    "dataSource": "prod",
     "public": false,
     "options": {
       "strictObjectIDCoercion": true
     }
   },
   "Role": {
-    "dataSource": "local",
+    "dataSource": "prod",
     "public": false
   },
   "submissions": {
-    "dataSource": "local",
+    "dataSource": "prod",
     "public": true
   },
-  "container": {
+  "containers": {
     "dataSource": "storage",
     "public": true
   }
