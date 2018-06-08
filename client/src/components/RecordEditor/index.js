@@ -14,6 +14,7 @@ export default class RecordEditor extends React.Component {
 
   toggleRecording = () => {
     if (!this.state.recording) {
+      //()=>{this.props.onRecord(this.state.recording)}
       window.localStorage.removeItem('array')
       window.localStorage.removeItem('mouseArray')
 
@@ -25,14 +26,22 @@ export default class RecordEditor extends React.Component {
       this.recordLoop = window.setInterval(() => {
         this.setState({
           editorStates: this.state.editorStates.concat(this.editor.saveViewState())
-        }, () => {
-          window.localStorage.editorStates = JSON.stringify(this.state.editorStates)
+        },
+        () => {this.props.onRecord(this.state.recording)},() => {
+          //window.localStorage.editorStates = JSON.stringify(this.state.editorStates)
+          fetch('http://localhost:3000/api/containers', {
+            method: 'POST',
+            mode: 'CORS',
+            body: JSON.stringify(this.state.editorStates),
+            headers: {
+            'Content-Type': 'application/json'
+            }
+            }).then(res => {
+                return res;
+            }).catch(err => err);
+                  console.log();
         }
-            //axios.post(`https://jsonplaceholder.typicode.com/users`, { user })
-            // .then(res => {
-            //   console.log(res);
-            //   console.log(res.data);
-)
+      )
       }, 1000)
     } else {
       window.document.removeEventListener('mousemove', this.onMouseMove)
@@ -42,7 +51,9 @@ export default class RecordEditor extends React.Component {
       recording: !this.state.recording,
       events: [],
       mouseEvents: []
-    })
+    },
+  () => {this.props.onRecord(this.state.recording)})
+
   }
 
 
@@ -80,7 +91,7 @@ export default class RecordEditor extends React.Component {
       })
     }, () => window.localStorage.mouseArray = JSON.stringify(this.state.mouseEvents))
   }
-
+   //recordingState=()=>{this.props.onRecord(this.recording)}
 
   render() {
     const requireConfig = {
@@ -109,7 +120,7 @@ export default class RecordEditor extends React.Component {
         />
         {
           this.state.recording &&
-          <button className="btn btn-default btn-lg offset-md-5"  onClick={this.toggleRecording}> Stop </button>
+          <button className="btn btn-default btn-lg offset-md-5"  onClick={this.toggleRecording} > Stop </button>
         }
         {
           !this.state.recording &&
