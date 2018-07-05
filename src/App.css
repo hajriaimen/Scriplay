@@ -2,6 +2,9 @@
   margin: 0px;
   padding: 0px;
 }
+nav{
+  background-color: transparent;
+}
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }

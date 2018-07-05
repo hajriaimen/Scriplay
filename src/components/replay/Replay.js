@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import MonacoEditor from 'react-monaco-editor';
-import axios from 'axios';
 import cursor from './cursor.png';
 import './Replay.css';
 //import ProgressBar from '../progressBar/ProgressBar';
@@ -21,7 +20,7 @@ export default class Replay extends React.Component {
    editorDidMount = (editor, monaco) => {
      this.editor = editor;
      editor.focus();
-    //  axios.get(`https://jsonplaceholder.typicode.com/users`)
+     //  axios.get(`https://jsonplaceholder.typicode.com/users`)
     //   .then(res => {
     //     const persons = res.data;
     //     this.setState({ persons });
@@ -50,9 +49,9 @@ export default class Replay extends React.Component {
              this.setState({
                value: event.value,
                currEvent: event
-             },()=>{const modelRep = this.refs.monaco.editor.getModel()
-                    const valueRep = modelRep.getValue()
-                    this.props.onChangeReplayValue(valueRep)})
+             },()=>{ const modelRep = this.refs.monaco.editor.getModel()
+              const valueRep = modelRep.getValue()
+              this.props.onChangeReplayValue(valueRep)})
            }
          },event.timestamp - firstEvent.timestamp))
        })
@@ -135,7 +134,7 @@ export default class Replay extends React.Component {
 
 
     return (
-      <div className={this.props.className}>
+      <div className={this.props.className} >
 
         <div className='Rep'>
           <MonacoEditor   ref="monaco"
@@ -157,15 +156,16 @@ export default class Replay extends React.Component {
            </div>
            {this.props.children}
         <div>
-           <button className="btn btn-default btn-sm " onClick={this.startReplay}>Replay</button>
+           <button className="btn btn-default btn-lg offset-md-4   " onClick={this.startReplay}>Replay</button>
            {
-            (this.state.playing) && <button className="btn btn-default btn-sm " onClick={this.stop}>Pause</button>
+            (this.state.playing) && <button className="btn btn-default btn-lg " onClick={this.stop}>Pause</button>
            }
            {
              !this.state.playing && this.state.started &&
-             <button className="btn btn-default btn-sm " onClick={this.resume}>Resume</button>
+             <button className="btn btn-default btn-lg " onClick={this.resume}>Resume</button>
            }
          </div>
+
       </div>
     );
   }

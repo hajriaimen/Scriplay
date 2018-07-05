@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import MonacoEditor from 'react-monaco-editor';
 import ReactRecorder from './components/recorder/ReactRecorder';
