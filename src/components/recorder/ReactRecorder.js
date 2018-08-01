@@ -16,16 +16,12 @@ export default class ReactRecorder extends React.Component {
       blobObject: null,
       isRecording: false,
       blobURL: null,
-      audioList: null
+      audioList: null,
+      audioUrl: ''
     }
-
   }
   save =()=>{
     //send post request to DB for this component
-
-  }
-  componentDidMount() {
-    console.log('component DidMount');
   }
 
   startRecording = () => {
@@ -35,15 +31,6 @@ export default class ReactRecorder extends React.Component {
     });
   }
 
-  stopRecording = (recordedBlob) => {
-    this.setState({
-      record: false,
-      isRecording: false,
-    });
-
-    console.log('the state now is :', this.state)
-
-  }
 
   onData = (recordedBlob) => {
     console.log('chunk of real-time data is: ', recordedBlob);
@@ -51,29 +38,19 @@ export default class ReactRecorder extends React.Component {
 
   onStop = (recordedBlob) => {
     audioList.push(recordedBlob)
+    const audioBlob = new Blob(audioList);
+    const audioUrl = URL.createObjectURL(audioBlob);
+//    console.log("audio details ",audioBlob);
     this.setState({
       audioList: audioList,
-
-
-    },()=>{
-      fetch('http://localhost:3000/api/containers', {
-        method: 'POST',
-        mode: 'CORS',
-        body: JSON.stringify(this.state.audioList),
-        headers: {
-        'Content-Type': 'application/json'
-        }
-        }).then(res => {
-            return res;
-        }).catch(err => err);
-              console.log();
-    })
+      audioUrl: audioUrl
+    },() => {this.props.onAudioSave(audioUrl)})
 
   }
    //recordingState=()=>{this.props.recordState ? this.startRecording : this.stopRecording}
 
   render() {
-    const { isRecording } = this.state;
+    const {isRecording} = this.state;
 
     return (
       <div >
@@ -88,15 +65,9 @@ export default class ReactRecorder extends React.Component {
             height="100"
           />
         </div>
-        <div className="container-fluid row col-md-6">
-          <AudioPlayBack url={this.state.audioList} />
-        </div>
-        {/* <div className="container-fluid row col-md-7">
-          <button type="button" className="btn btn-default btn-md offset-md-5" onClick={this.state.record ? this.stopRecording : this.startRecording}>{this.state.record ? "Stop" : "Start"}>
-            <span className="glyphicon glyphicon-record"></span>
-          </button>
+        {/* <div className="container-fluid row col-md-6">
+          <AudioPlayBack url={this.props.audioUrl} />
         </div> */}
-
       </div >
     );
   }

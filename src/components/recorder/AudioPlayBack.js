@@ -9,9 +9,11 @@ export default class AudioPlayBack extends React.Component {
             audioList:null
         }
     }
+    //let audioUrl;
     render() {
-        console.log('url:',this.props.url)
-        return (this.props.url != null && <audio className=" row col-md-6 offset-md-3" src={this.props.url[this.props.url.length-1].blobURL} controls />
+        console.log('url:',this.props.audioUrl)
+        //audioUrl = this.props.url;
+        return (this.props.url != null && <audio className=" row col-md-6 offset-md-3" src={this.props.audioUrl} controls />
         )
     }
 

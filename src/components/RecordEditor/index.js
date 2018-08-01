@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import axios from 'axios'
+
 import MonacoEditor from 'react-monaco-editor';
 import './index.css'
 export default class RecordEditor extends React.Component {
@@ -8,54 +10,69 @@ export default class RecordEditor extends React.Component {
       events: [],
       mouseEvents: [],
       recording: false,
-      editorStates: []
+      editorStates: [],
+      formData : {},
+      audioUrl : ''
+    },
+    this.postDataHandler = this.postDataHandler.bind(this)
+  }
+  //`events=${this.state.events}&mouseEvents=${this.state.mouseEvents}&editorStates=${this.state.editorStates}&audioUrl=${this.props.audioUrl}`;
+
+  postDataHandler(){
+
+    const formData= {
+      events:this.state.events,
+      mouseEvents:this.state.mouseEvents,
+      editorStates:this.state.editorStates,
+      audioUrl:this.props.AudioSave
     }
+    // this.setState({
+    //   audioUrl:this.props.AudioSave
+    // });
+
+      console.log(this.props.AudioSave);
+      console.log(formData);
+    axios.post(`localhost:3005/scriplay/`, { formData })
+       .then(res => {
+         console.log(res);
+         console.log(res.data);
+       })
+
   }
 
   toggleRecording = () => {
+    //recordin
     if (!this.state.recording) {
-      //()=>{this.props.onRecord(this.state.recording)}
       window.localStorage.removeItem('array')
       window.localStorage.removeItem('mouseArray')
-
       window.document.addEventListener('mousemove', this.onMouseMove)
       this.setState({
         editorStates: [],
-
       })
       this.recordLoop = window.setInterval(() => {
         this.setState({
           editorStates: this.state.editorStates.concat(this.editor.saveViewState())
-        },
-        () => {this.props.onRecord(this.state.recording)},() => {
-          //window.localStorage.editorStates = JSON.stringify(this.state.editorStates)
-          fetch('http://localhost:3000/api/containers', {
-            method: 'POST',
-            mode: 'CORS',
-            body: JSON.stringify(this.state.editorStates),
-            headers: {
-            'Content-Type': 'application/json'
-            }
-            }).then(res => {
-                return res;
-            }).catch(err => err);
-                  console.log();
+        }),
+         () => {this.props.onRecord(this.state.recording)}
+        ,() => {
+          window.localStorage.editorStates = JSON.stringify(this.state.editorStates)
+          this.props.EditorStatesVal(this.state.editorStates)
         }
-      )
+      this.props.EditorStatesVal(this.state.editorStates)
       }, 1000)
     } else {
       window.document.removeEventListener('mousemove', this.onMouseMove)
-      window.clearInterval(this.recordLoop)
-    }
-    this.setState({
-      recording: !this.state.recording,
-      events: [],
-      mouseEvents: []
-    },
+      window.clearInterval(this.recordLoop);
+      }
+      this.setState({
+        //audioUrl:this.props.audioUrl,
+        recording: !this.state.recording,
+        events: [],
+        mouseEvents: []
+      },
+
   () => {this.props.onRecord(this.state.recording)})
-
   }
-
 
   editorDidMount = (editor, monaco) => {
     this.editor = editor
@@ -75,12 +92,12 @@ export default class RecordEditor extends React.Component {
         const model = this.refs.monaco.editor.getModel()
         const value = model.getValue()
         this.props.onChangeEditorValue(value)
+        this.props.tappingVal(this.state.events)
       })
     }
   }
 
   onMouseMove = (e) => {
-    console.log('mouse move', e)
     this.setState({
       mouseEvents: this.state.mouseEvents.concat({
         cx: e.clientX,
@@ -89,8 +106,10 @@ export default class RecordEditor extends React.Component {
         wy: window.innerWidth,
         timestamp: Date.now()
       })
-    }, () => window.localStorage.mouseArray = JSON.stringify(this.state.mouseEvents))
+    },() => window.localStorage.mouseArray = JSON.stringify(this.state.mouseEvents))
+        this.props.mousePos(this.state.mouseEvents)
   }
+
    //recordingState=()=>{this.props.onRecord(this.recording)}
 
   render() {
@@ -118,13 +137,14 @@ export default class RecordEditor extends React.Component {
           events={this.events}
           onChange={this.onChange}
         />
+         {this.props.children}
         {
           this.state.recording &&
-          <button className="btn btn-default btn-lg offset-md-5"  onClick={this.toggleRecording} > Stop </button>
+          <button className="btn btn-default btn-lg offset-md-5"  onClick={()=>{this.toggleRecording(); this.postDataHandler()}} > Stop </button>
         }
         {
           !this.state.recording &&
-          <button className="btn btn-default btn-lg offset-md-5" onClick={this.toggleRecording}> Record </button>
+          <button className="btn btn-default btn-lg offset-md-5" onClick= {this.toggleRecording}> Record </button>
         }
 
       </div>
