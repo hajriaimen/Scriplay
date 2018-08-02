@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import MonacoEditor from 'react-monaco-editor';
 import cursor from './cursor.png';
 import './Replay.css';
@@ -15,6 +16,17 @@ export default class Replay extends React.Component {
        recordingTime:0,
        value:''
      }
+   }
+
+   componentDidMount(){
+     // axios.post(`localhost:3005/scriplay/`, { formData })
+     //    .then(res => {
+     //      console.log(res);
+     //      console.log(res.data);
+     //    })
+     //    this.setState({
+     //
+     //    });
    }
 
    editorDidMount = (editor, monaco) => {

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import axios from 'axios'
-
+import axios from 'axios';
 import MonacoEditor from 'react-monaco-editor';
 import './index.css'
+const uuidv4 = require('uuid/v4');
+
 export default class RecordEditor extends React.Component {
   constructor(props) {
     super(props);
@@ -12,7 +13,8 @@ export default class RecordEditor extends React.Component {
       recording: false,
       editorStates: [],
       formData : {},
-      audioUrl : ''
+      audioUrl : '',
+      id:""
     },
     this.postDataHandler = this.postDataHandler.bind(this)
   }
@@ -21,6 +23,7 @@ export default class RecordEditor extends React.Component {
   postDataHandler(){
 
     const formData= {
+    //  id:uuidv4(),
       events:this.state.events,
       mouseEvents:this.state.mouseEvents,
       editorStates:this.state.editorStates,
@@ -31,8 +34,10 @@ export default class RecordEditor extends React.Component {
     // });
 
       console.log(this.props.AudioSave);
-      console.log(formData);
-    axios.post(`localhost:3005/scriplay/`, { formData })
+
+      const final=JSON.stringify(formData);
+        console.log(final);
+    axios.post(`http://localhost:3005/records`, {formData  })
        .then(res => {
          console.log(res);
          console.log(res.data);

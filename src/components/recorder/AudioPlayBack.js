@@ -6,15 +6,26 @@ export default class AudioPlayBack extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            audioList:null
+            audioList:null,
+            audioUrl:''
         }
+    }
+    AudioSave(){
+      this.setState({});
+      audioUrl:this.props.AudioSave
+
     }
     //let audioUrl;
     render() {
-        console.log('url:',this.props.audioUrl)
+      {this.props.children}
+        console.log('url:',this.props.AudioSave)
         //audioUrl = this.props.url;
-        return (this.props.url != null && <audio className=" row col-md-6 offset-md-3" src={this.props.audioUrl} controls />
+
+
+        return (<audio src={this.AudioSave} controls />
+
         )
+
     }
 
 }

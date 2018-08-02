@@ -130,13 +130,14 @@ class App extends Component {
                    return (
                      <div>
                         <div className="container-fluid row">
-                          <div className="col">
-                          <Replay  onChangeReplayValue={this.onChangeEditorValue.bind(this)}/>
-                          <AudioPlayBack url={this.props.audioUrl} />
+                          <Replay  className="col-md-6"  onChangeReplayValue={this.onChangeEditorValue.bind(this)}/>
+                          <Preview className="col-md-6"  editorValue={this.state.valueRep}/>
                         </div>
-                          <Preview className="col" editorValue={this.state.valueRep}/>
+                        <div className="container-fluid row">
+                            <AudioPlayBack className="col-md-6" AudioSave={this.state.audioUrl} />
                         </div>
                       </div>
+
                      );
               }}/>
 
